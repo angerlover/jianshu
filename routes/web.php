@@ -24,5 +24,20 @@ Route::put('/editarticle/{article}','ArticleController@editArticlePost');
 Route::get('/deletearticle/{article}','ArticleController@deleteArticle');
 Route::get('/articles/{article}','ArticleController@show'); // 文章详情页
 
+
+// 登陆注册
+Route::get('/register','RegisterController@index');
+Route::post('/register','RegisterController@register');
+Route::get('/login','LoginController@index');
+Route::post('/login','LoginController@login');
+Route::get('/logout','LoginController@logout');
+
+// 个人设置页面
+
+Route::get('/settings','UserController@settings');
 // 上传图片
 Route::post('/articles/image/upload','ArticleController@uploadImage');
+
+
+// 测试服务提供者
+Route::get('/service','\App\Http\Controllers\ServiceTest\ServiceTestController@index');
