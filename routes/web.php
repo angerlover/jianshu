@@ -34,8 +34,8 @@ Route::get('/logout','LoginController@logout');
 
 // 个人设置
 
-Route::get('/settings','UserController@index');
-Route::post('/settings','UserController@settings');
+Route::get('/settings/{user}','UserController@index');
+Route::post('/settings/{user','UserController@settings');
 // 上传图片
 Route::post('/articles/image/upload','ArticleController@uploadImage');
 
@@ -46,7 +46,11 @@ Route::get('/zan/{article}','ZanController@zan');
 Route::get('/unzan/{article}','ZanController@unzan');
 Route::get('/search','SearchController@search');
 
-
+// 个人中心
+Route::get('/center/{user}','UserController@center');
+// 关注和取关
+Route::post('/fan/{user}','UserController@fan');
+Route::post('/unfan/{user}','UserController@unfan');
 
 
 // 测试服务提供者

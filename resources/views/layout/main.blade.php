@@ -52,19 +52,21 @@
                 <button class="btn btn-default" style="margin-top:10px" type="submit">Go!</button>
             </li>
         </ul>
+        </form>
 
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <div>
                     <img src="/storage/9f0b0809fd136c389c20f949baae3957/iBkvipBCiX6cHitZSdTaXydpen5PBiul7yYCc88O.jpeg" alt="" class="img-rounded" style="border-radius:500px; height: 30px">
-                    <a href="#" class="blog-nav-item dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@if(\Auth::check()){{\Auth::user()->name}}  @endif <span class="caret"></span></a>
+                    <a href="#" class="blog-nav-item dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@if(\Auth::check()){{\Auth::user()->name}}@else 欢迎来到简书   @endif </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/user/5">我的主页</a></li>
-                        <li><a href="/user/5/setting">个人设置</a></li>
                         @if(\Auth::check())
+                        <li><a href="/center/{{\Auth::id()}}">我的主页</a></li>
+                        <li><a href="/setting/{user}">个人设置</a></li>
                         <li><a href="/logout">登出</a></li>
                         @else
                             <li><a href="/login">登录</a></li>
+                            <li><a href="/register">注册</a></li>
                         @endif
                     </ul>
                 </div>
