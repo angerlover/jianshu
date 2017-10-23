@@ -13,7 +13,7 @@ class ArticleController extends Controller
     function lst()
     {
         $model = new Article();
-        $data = $model->orderBy('created_at','desc')->paginate(5);
+        $data = $model->orderBy('created_at','desc')->withCount(['comments','zans'])->paginate(5);
         return view('lst',compact('data'));
     }
 
@@ -23,6 +23,11 @@ class ArticleController extends Controller
      */
     function add()
     {
+        // 检查是否登录
+        if(!\Auth::check())
+        {
+            return redirect('/login');
+        }
         return view('add');
     }
 
@@ -31,6 +36,8 @@ class ArticleController extends Controller
      */
     function show(Article $article)
     {
+        // 预加载文章的关联模型：评论
+        $article->load('comments');
         return view('detail',compact('article'));
     }
     /**
@@ -38,13 +45,19 @@ class ArticleController extends Controller
      */
     function addArticlePost(Request $request)
     {
+        // 检查是否登录
+        if(!\Auth::check())
+        {
+            return redirect('\login');
+        }
         $model = new Article();
 //        dd($request['title']);
         // 验证数据
         $this->validate($request,['title'=>'required|max:100|min:1',
                                     'content'=>'required'
                     ]);
-        if(Article::create($request->all()))
+        $data = array_merge($request->all(),['user_id'=>\Auth::id()]);
+        if(Article::create($data))
         {
             return redirect('/articles');
         }
@@ -57,6 +70,7 @@ class ArticleController extends Controller
      */
     function edit(Article $article)
     {
+        $this->authorize('update',$article);
         return view('editarticle',compact('article'));
     }
 
@@ -72,7 +86,8 @@ class ArticleController extends Controller
         ]);
 //        $article->title = $request->all()['title'];
 //        $article->content = $request->all(['content']);
-
+        // 赋予权限？这实际是一个检验的过程吧
+        $this->authorize('update',$article);
         if($article->update(request(['title','content'])))
         {
             return redirect('/articles/'.$article->id);
@@ -85,6 +100,7 @@ class ArticleController extends Controller
      */
     function deleteArticle(Article $article)
     {
+        $this->authorize('delete',$article);
         if($article->delete())
         {
             return redirect('/articles');

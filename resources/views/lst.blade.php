@@ -36,10 +36,10 @@
             @foreach($data as $b)
                         <div class="blog-post">
                 <h2 class="blog-post-title"><a href="/articles/{{$b->id}}" >{{$b['title']}}</a></h2>
-                <p class="blog-post-meta">{{$b->created_at}} by <a href="/user/5">Kassandra Ankunding2</a></p>
+                <p class="blog-post-meta">{{$b->created_at}} by <a href="/user/5">{{$b->user->name}}</a></p>
 
                 <p>{!!str_limit($b->content,100,'...')!!}
-                <p class="blog-post-meta">赞 0  | 评论 0</p>
+                <p class="blog-post-meta">赞 {{$b->zans_count}}  | 评论 {{$b->comments_count}}</p>
             </div>
             @endforeach
 

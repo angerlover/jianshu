@@ -32,11 +32,21 @@ Route::get('/login','LoginController@index');
 Route::post('/login','LoginController@login');
 Route::get('/logout','LoginController@logout');
 
-// 个人设置页面
+// 个人设置
 
-Route::get('/settings','UserController@settings');
+Route::get('/settings','UserController@index');
+Route::post('/settings','UserController@settings');
 // 上传图片
 Route::post('/articles/image/upload','ArticleController@uploadImage');
+
+// 评论
+Route::post('/comment/{article}','CommentController@comment');
+// 赞
+Route::get('/zan/{article}','ZanController@zan');
+Route::get('/unzan/{article}','ZanController@unzan');
+Route::get('/search','SearchController@search');
+
+
 
 
 // 测试服务提供者
