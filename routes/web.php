@@ -53,5 +53,13 @@ Route::post('/fan/{user}','UserController@fan');
 Route::post('/unfan/{user}','UserController@unfan');
 
 
+// 专题详情页
+Route::get('/topic/{topic}','TopicController@show');
+// 投稿
+Route::post('/topic/submit/{topic}','TopicController@submit');
+
 // 测试服务提供者
 Route::get('/service','\App\Http\Controllers\ServiceTest\ServiceTestController@index');
+
+
+include_once 'admin.php';

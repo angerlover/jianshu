@@ -16,6 +16,14 @@ class AppServiceProvider extends ServiceProvider
     {
         // 设置mysql的最大字符长度和laravel的冲突
         Schema::defaultStringLength(191);
+
+        // 给sidebar合成视图
+        \View::composer('layout.sidebar',function($view){
+
+            $topics = \App\Topic::all();
+
+            $view->with('topics',$topics);
+        });
     }
 
     /**

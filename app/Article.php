@@ -3,6 +3,7 @@
 namespace App;
 
 use App\BaseModel;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Scout\Searchable;
 
 class Article extends BaseModel
@@ -29,6 +30,14 @@ class Article extends BaseModel
         return $this->hasMany('App\Zan');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * 文章和专题的关联
+     */
+    function articleTopics()
+    {
+        return $this->hasMany(\App\ArticleTopic::class,'article_id','id');
+    }
 
     // 定义索引里面的type
     public function searchableAs()
@@ -42,5 +51,41 @@ class Article extends BaseModel
           'title'=>$this->title,
             'content'=>$this->content
         ];
+    }
+
+    /**
+     * @param Builder $query
+     * @param $user_id
+     * @return $this
+     * 利用scope实现某个作者的文章
+     */
+    public function scopeAuthorBy(Builder $query,$user_id)
+    {
+        return $query->where('user_id',$user_id);
+    }
+
+    /**
+     * @param Builder $query
+     * @param $topic_id
+     * @return Builder|static
+     * 不属于某个话题的文章
+     */
+    public function scopeTopicNot(Builder $query,$topic_id)
+    {
+        return $query->doesntHave('articleTopics','and',function($q) use($topic_id){
+            $q->where('topic_id',$topic_id);
+        });
+    }
+
+    /**
+     * 重写全局scope 获取状态为0或1的文章（除了不通过之外）
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('available',function(Builder $builder)
+        {
+           $builder->whereIn('status',[0,1]);
+        });
     }
 }
