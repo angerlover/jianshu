@@ -22,6 +22,22 @@ Route::group(['prefix'=>'admin'],function (){
         Route::get('/adminlist','\App\Http\Controllers\admin\UserController@lst');
         Route::get('/adminadd','\App\Http\Controllers\admin\UserController@add');
         Route::post('/adminstore','\App\Http\Controllers\admin\UserController@store');
+        Route::get('/roles/{admin}','\App\Http\Controllers\admin\UserController@rolelist');
+        Route::post('/roles/{admin}','\App\Http\Controllers\admin\UserController@editRole');
+
+
+        // 角色
+        Route::get('/rolelist','\App\Http\Controllers\admin\RoleController@rolelist');
+        Route::get('/addrole','\App\Http\Controllers\admin\RoleController@addRole');
+        Route::post('/addrole','\App\Http\Controllers\admin\RoleController@storerole');
+        Route::get('/role/permissions/{role}','\App\Http\Controllers\admin\RoleController@permissions');
+
+
+        // 权限
+        Route::get('/permissionlist','\App\Http\Controllers\admin\PermissionController@lst');
+        Route::get('/addpermission','\App\Http\Controllers\admin\PermissionController@add');
+        Route::post('/addpermission','\App\Http\Controllers\admin\PermissionController@addPost');
+
 
         // 文章审核
         Route::get('/articlelist','\App\Http\Controllers\admin\ArticleController@lst');

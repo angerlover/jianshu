@@ -24,7 +24,7 @@
                                     <td>{{$admin->id}}</td>
                                     <td>{{$admin->name}}</td>
                                     <td>
-                                        <a type="button" class="btn" href="/admin/users/2/role" >角色管理</a>
+                                        <a type="button" class="btn" href="/admin/roles/{{$admin->id}}" >角色管理</a>
                                     </td>
                                 </tr>
                             @endforeach

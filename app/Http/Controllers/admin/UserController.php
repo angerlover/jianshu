@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\AdminUser;
 
 class UserController extends Controller
 {
@@ -46,5 +47,22 @@ class UserController extends Controller
         }
 
         return back();
+    }
+
+    /**
+     * 当前管理员所属角色列表
+     */
+    public function rolelist(AdminUser $admin)
+    {
+        return view('admin.user-role');
+    }
+
+    /**
+     * @param Admin $admin
+     * 修改管理员的角色
+     */
+    public function editRole(Admin $admin)
+    {
+
     }
 }
