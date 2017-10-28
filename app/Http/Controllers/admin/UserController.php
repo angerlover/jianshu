@@ -54,15 +54,47 @@ class UserController extends Controller
      */
     public function rolelist(AdminUser $admin)
     {
-        return view('admin.user-role');
+        // 所有的角色列表
+        $allRoles = \App\Role::all();
+        $myRoles = $admin->roles;
+        return view('admin.user-role',compact('allRoles','myRoles','admin'));
     }
 
     /**
      * @param Admin $admin
      * 修改管理员的角色
      */
-    public function editRole(Admin $admin)
+    public function editRole(AdminUser $admin)
     {
 
+        $myRoles = $admin->roles;
+        // 如果是空的则删除所有模型
+        if(empty(request('roles')))
+        {
+            foreach($myRoles as $role)
+            {
+                $admin->removeRole($role);
+            }
+
+            return redirect('admin/adminlist');
+        }
+        // 寻找模型
+        $roles = \App\Role::findMany(request('roles'));
+//        dd($myRoles);
+        // 要删除的
+        $deleteRoles = $myRoles->diff($roles);
+        foreach($deleteRoles as $role)
+        {
+            $admin->removeRole($role);
+        }
+
+        // 要增加的
+        $addRoles = $roles->diff($myRoles);
+        foreach($addRoles as $role)
+        {
+            $admin->assignRole($role);
+        }
+
+        return redirect('admin/adminlist');
     }
 }

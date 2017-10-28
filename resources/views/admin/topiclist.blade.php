@@ -1,5 +1,6 @@
 @extends("admin.layout.main")
 @section("content")
+            <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
@@ -7,29 +8,28 @@
                 <div class="box">
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">权限列表</h3>
+                        <h3 class="box-title">专题列表</h3>
                     </div>
-                    <a type="button" class="btn " href="/admin/addpermission" >增加权限</a>
+                    <a type="button" class="btn " href="/admin/topic/create" >增加专题</a>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody><tr>
                                 <th style="width: 10px">#</th>
-                                <th>权限名称</th>
-                                <th>描述</th>
+                                <th>专题名称</th>
                                 <th>操作</th>
                             </tr>
-                            @foreach($permissions as $permission)
+                            @foreach($topics as $topic)
                                                             <tr>
-                                    <td>{{$permission->id}}</td>
-                                    <td>{{$permission->name}}</td>
-                                    <td>{{$permission->description}}</td>
-                                    <td><a href="#">修改</a> <a href="">删除</a></td>
+                                    <td>{{$topic->id}}</td>
+                                    <td>{{$topic->name}}</td>
+                                    <td>
+                                        <a type="button" class="btn resource-delete" delete-url="/admin/topic/{{$topic->id}}" href="/admin/topic/{{$topic->id}}" >删除</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                                         </tbody></table>
                     </div>
-
                 </div>
             </div>
         </div>

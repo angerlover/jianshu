@@ -12,7 +12,9 @@ class PermissionController extends Controller
      */
     public function lst()
     {
-        return view('admin.permissionlst');
+        // 取出所有的权限
+        $permissions = \App\Permission::all();
+        return view('admin.permissionlst',compact('permissions'));
     }
 
     /**
@@ -29,6 +31,14 @@ class PermissionController extends Controller
      */
     public function addPost()
     {
+        $this->validate(request(),[
+           'name' => 'required'
+        ]);
+
+        if(\App\Permission::create(request()->all()))
+        {
+            return redirect('admin/permissionlist');
+        }
 
     }
 }

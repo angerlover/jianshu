@@ -32,3 +32,28 @@ $('.post-audit').click(function(){
         });
     }
 });
+
+$('.resource-delete').click(function(event){
+    var target = $(this);
+    var url = target.attr('delete-url');
+    if(confirm('确定删除吗？'))
+    {
+        event.preventDefault();
+        $.ajax({
+            url:url,
+            method:'post',
+            data:{'_method':'DELETE'},
+            dataType:'json',
+            success:function(data)
+            {
+                if(data.error != 0)
+                {
+                    alert(msg);
+                }
+
+                // 刷新页面
+                window.location.reload();
+            },
+        });
+    }
+});

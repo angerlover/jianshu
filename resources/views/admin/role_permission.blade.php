@@ -8,44 +8,20 @@
                 <div class="box">
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">权限列表</h3>
+                        <h3 class="box-title">{{$role->name}}的权限列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/admin/roles/1/permission" method="POST">
-                            <input type="hidden" name="_token" value="RPPMc0lhvtynKELDZljXlz9UZI9uNc55ip1P8GCM">
+                        <form action="/admin/role/permissions/{{$role->id}}" method="POST">
+                            {{csrf_field()}}
                             <div class="form-group">
-                                                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="permissions[]"
-                                                                                                      checked
-                                                                                                      value="1">
-                                            system
-                                        </label>
-                                    </div>
-                                                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="permissions[]"
-                                                                                                      checked
-                                                                                                      value="2">
-                                            post
-                                        </label>
-                                    </div>
-                                                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="permissions[]"
-                                                                                                      value="3">
-                                            topic
-                                        </label>
-                                    </div>
-                                                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="permissions[]"
-                                                                                                      value="4">
-                                            notice
-                                        </label>
-                                    </div>
-                                                            </div>
+                                @foreach($allPermissions as $permission)
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" @if($role->hasPermission($permission)) checked @endif  name="permissions[]" value="{{$permission->id}}"> {{$permission->name}}</label>
+                                </div>
+                                @endforeach
+                            </div>
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">提交</button>
                             </div>

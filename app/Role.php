@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     protected $table = 'roles';
-
+    protected $guarded = [];
     /*******************模型关联**********************/
 
     /**
@@ -46,6 +46,6 @@ class Role extends Model
      */
     public function hasPermission($permission)
     {
-        return !!$this->permissions()->contains($permission)->count();
+        return $this->permissions->contains($permission);
     }
 }
