@@ -13,7 +13,10 @@ class ArticleController extends Controller
     function lst()
     {
         $model = new Article();
-        $data = $model->orderBy('created_at','desc')->withCount(['comments','zans'])->paginate(5);
+        $data = $model->orderBy('created_at','desc')->with('user')->withCount(['comments','zans'])->paginate(5);
+        // 预加载
+//        $data->load('user');
+        dd($data);
         return view('lst',compact('data'));
     }
 

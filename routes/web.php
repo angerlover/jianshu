@@ -57,7 +57,8 @@ Route::post('/unfan/{user}','UserController@unfan');
 Route::get('/topic/{topic}','TopicController@show');
 // 投稿
 Route::post('/topic/submit/{topic}','TopicController@submit');
-
+// 通知
+Route::get('/notices/{user}','NoticeController@index');
 // 测试服务提供者
 Route::get('/service','\App\Http\Controllers\ServiceTest\ServiceTestController@index');
 

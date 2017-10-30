@@ -24,6 +24,18 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('topics',$topics);
         });
+
+
+        // 慢查询
+        \DB::listen(function ($query){
+             $sql = $query->sql;
+             $time = $query->time;
+             $bindings = $query->bindings;
+
+             // 输出到日志
+            \Log::debug(var_export(compact('sql','time','bindings'),true));
+
+    });
     }
 
     /**

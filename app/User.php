@@ -40,6 +40,17 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Fan','fan_id','id');
     }
+    // 当前用户的通知
+    public function notices()
+    {
+        return $this->belongsToMany('App\Notice','user_notices','user_id','notice_id')->withPivot(['user_id','notice_id']);
+    }
+
+    // 增加一条通知
+    public function addNotice(Notice $notice)
+    {
+        return $this->notices()->save($notice);
+    }
 
     /**
      * @param $user_id

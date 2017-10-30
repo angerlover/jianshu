@@ -43,7 +43,7 @@
                 <a class="blog-nav-item" href="/addarticle">写文章</a>
             </li>
             <li>
-                <a class="blog-nav-item" href="/notices">通知</a>
+                <a class="blog-nav-item" href="/notices/{{\Auth::id()}}">通知</a>
             </li>
             <li>
                 <input name="query" type="text" value="" class="form-control" style="margin-top:10px" placeholder="搜索词">
